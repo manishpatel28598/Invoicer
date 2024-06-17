@@ -1,0 +1,11 @@
+.center-table {
+    text-align: center;
+    margin: auto;
+}
+
+.center-table th, .center-table td {
+    text-align: center;
+}
+.client-details img {
+    display: block;
+  }
