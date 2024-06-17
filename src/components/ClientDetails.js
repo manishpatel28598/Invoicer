@@ -2,7 +2,7 @@ import React from 'react';
 export default function ({ logo }) {
   return (
     <>
-      <section className="mt-5 flex flex-row">
+      <section className="mt-5 flex flex-row mb-10 ">
         <div className="client-details">
           <img
             src={logo}

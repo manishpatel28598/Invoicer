@@ -1,4 +1,4 @@
-import { useState , useEffect} from "react";
+import { useState , useEffect, useRef} from "react";
 import Table from "./components/Table";
 import Header from "./components/Header";
 import Maindetails from "./components/Maindetails";
@@ -6,6 +6,8 @@ import ClientDetails from "./components/ClientDetails";
 import Dates from "./components/Dates";
 import logo from "./components/logo1.png";
 import { v4 as uuidv4 } from "uuid";
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 function App() {
   const [ShowInvoice, setShowInvoce] = useState(false);
@@ -21,6 +23,7 @@ function App() {
   const [Amount, setAmount] = useState("")
   const [invoiceNumber, setInvoiceNumber] = useState("");
   const [totalAmount, setTotalAmount] = useState(0)
+  const invoiceRef = useRef(null); // Ref to the invoice container
 
 
   useEffect(() => {
@@ -69,6 +72,8 @@ function App() {
     
   };
 
+
+
   const handleGenerateInvoice = () => {
     setShowInvoce(true);
     // Generate a new invoice ID
@@ -80,16 +85,19 @@ function App() {
   useEffect(() => {
     console.log(list);
   }, [list]);
-
+ 
   return (
     <>
-      <main className="m-5 p-5 md:max-w-xl md:mx-auto lg:max-w-2xl xl:max-w-4xl bg-white rounded shadow">
+      <main className="m-0 p-5 md:max-w-xl md:mx-auto lg:max-w-2xl xl:max-w-4xl bg-white rounded shadow">
         {ShowInvoice ? (
-          <div>
-            <Header handlePrint={handlePrint} />
+          <div ref={invoiceRef} id="invoice">
+            <div>
+            <Dates InvoiceDate={InvoiceDate} invoiceNumber={invoiceNumber}/>
+
+            </div>
+            <Header handlePrint={handlePrint}/>
             <Maindetails name={name} phone={phone} address={address}/>
             <ClientDetails logo = {logo}/>
-            <Dates InvoiceDate={InvoiceDate} invoiceNumber={invoiceNumber}/>
             <Table 
             ItemName = {ItemName} Quantity={Quantity} PricePerUnit = {PricePerUnit} 
             Discount={Discount} Amount = {Amount} list={list} setList={setList}/>
@@ -115,6 +123,7 @@ function App() {
             <div className="flex flex-col">
               <label htmlFor="name">Customer Name</label>
               <input
+                className="px-5"
                 type="text"
                 name="text"
                 id="name"
@@ -127,6 +136,7 @@ function App() {
             <div className="flex flex-col">
               <label htmlFor="address">Customer Address</label>
               <input
+                className="px-5"
                 type="text"
                 name="text"
                 id="address"
@@ -139,6 +149,7 @@ function App() {
             <div className="flex flex-col">
             <label htmlFor="Phone">Customer Phone</label>
               <input
+                className="px-5"
                 type="text"
                 name="text"
                 id="Phone"
@@ -151,6 +162,7 @@ function App() {
             <div className="flex flex-col">
             <label htmlFor="Date">Invoice Date</label>
               <input
+                className="px-5"
                 type="date"
                 name="invoicedate"
                 id="Phone"
@@ -168,6 +180,7 @@ function App() {
             <div className="flex flex-col">
           <label htmlFor="ItemName">Item's Name</label>
           <input
+                className="px-5"
                 type="text"
                 name="text"
                 id="ItemName"
@@ -183,6 +196,7 @@ function App() {
           <div className="flex flex-col">
           <label htmlFor="Quantity">Quantity(gm)</label>
           <input
+                className="px-5"
                 type="number"
                 name="Quantity"
                 id="Quantity"
@@ -196,6 +210,7 @@ function App() {
           <div className="flex flex-col">
           <label htmlFor="PricePerUnit">Rate</label>
           <input
+                className="px-5"
                 type="number"
                 name="Rate"
                 id="PricePerUnit"
@@ -209,6 +224,7 @@ function App() {
             <div className="flex flex-col">
           <label htmlFor="Discount">Discount(%)</label>
           <input
+                className="px-5"
                 type="number"
                 name="Discount"
                 id="Discount"
