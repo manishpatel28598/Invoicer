@@ -105,9 +105,14 @@ function App() {
             ItemName = {ItemName} Quantity={Quantity} PricePerUnit = {PricePerUnit} 
             Discount={Discount} Amount = {Amount} list={list} setList={setList} MakingCost ={MakingCost}/>
 
-            <section className="mt-5">
+            <section className="mt-5 flex flex-row justify-between">
+              <div>
               <h2 className="text-xl font-bold">Total Amount</h2>
               <p>₹{totalAmount.toFixed(2)}</p>
+              </div>
+              <div>
+              Authorised Signatory
+              </div>
             </section>
 
             <button
