@@ -23,15 +23,16 @@ function App() {
   const [Amount, setAmount] = useState("")
   const [invoiceNumber, setInvoiceNumber] = useState("");
   const [totalAmount, setTotalAmount] = useState(0)
+  const [MakingCost, setMakingCost] = useState()
   const invoiceRef = useRef(null); // Ref to the invoice container
-
 
   useEffect(() => {
     // Calculate the total amount whenever the list changes
     const total = list.reduce((acc, item) => {
       const itemTotal = item.Quantity * item.PricePerUnit;
       const discountAmount = itemTotal * (item.Discount / 100);
-      return acc + (itemTotal - discountAmount);
+      const makingcost = item.MakingCost * ((100-item.Discount) / 100);
+      return acc + (itemTotal - discountAmount)+makingcost;
     }, 0);
     setTotalAmount(total);
   }, [list]);
@@ -60,6 +61,7 @@ function App() {
       ItemName : ItemName,
       Quantity: Quantity,
       PricePerUnit: PricePerUnit,
+      MakingCost: MakingCost,
       Discount: Discount
     };
 
@@ -68,6 +70,7 @@ function App() {
     setItemName("")
     setQuantity("")
     setPricePerUnit("")
+    setMakingCost("")
     setDiscount("")
     
   };
@@ -100,11 +103,11 @@ function App() {
             <ClientDetails logo = {logo}/>
             <Table 
             ItemName = {ItemName} Quantity={Quantity} PricePerUnit = {PricePerUnit} 
-            Discount={Discount} Amount = {Amount} list={list} setList={setList}/>
+            Discount={Discount} Amount = {Amount} list={list} setList={setList} MakingCost ={MakingCost}/>
 
             <section className="mt-5">
               <h2 className="text-xl font-bold">Total Amount</h2>
-              <p>${totalAmount.toFixed(2)}</p>
+              <p>₹{totalAmount.toFixed(2)}</p>
             </section>
 
             <button
@@ -220,6 +223,21 @@ function App() {
                 onChange={(e)=> setPricePerUnit(e.target.value)}
               />
             </div>
+
+          <div className="flex flex-col">
+          <label htmlFor="MakingCost">Making cost</label>
+          <input
+                className="px-5"
+                type="number"
+                name="Making cost"
+                id="MakingCost"
+                placeholder="Making cost"
+                autoComplete="off"
+                value={MakingCost}
+                onChange={(e)=> setMakingCost(e.target.value)}
+              />
+            </div>
+
 
             <div className="flex flex-col">
           <label htmlFor="Discount">Discount(%)</label>

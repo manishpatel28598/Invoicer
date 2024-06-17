@@ -8,14 +8,15 @@ export default function Table({list}){
 
     // useEffect(() => {
         // Calculate the amount whenever Quantity or PricePerUnit changes
-        const calculatedAmount = (Quantity , PricePerUnit) =>{
+        const calculatedAmount = (Quantity , PricePerUnit, MakingCost) =>{
             console.log(Quantity * PricePerUnit)
-            return (Quantity * PricePerUnit);
+            console.log(MakingCost)
+            return ((Quantity * PricePerUnit)+parseInt(MakingCost));
         };
         // setAmount(calculatedAmount);
         // Calculate the total after applying the discount
-        const calculatedTotal = (Quantity, PricePerUnit, Discount)=>{
-            const amount = calculatedAmount(Quantity , PricePerUnit);
+        const calculatedTotal = (Quantity, PricePerUnit, Discount, MakingCost)=>{
+            const amount = calculatedAmount(Quantity , PricePerUnit, MakingCost);
             return amount-(amount * Discount/100);
         // setTotal(calculatedTotal);
     };
@@ -30,6 +31,7 @@ export default function Table({list}){
                         <th>Item Name</th>
                         <th>Quantity(gm)</th>
                         <th>Price/Unit</th>
+                        <th>Making Cost</th>
                         <th>Amount</th>
                         <th>Discount</th>
                         <th>Total</th>
@@ -41,9 +43,10 @@ export default function Table({list}){
                         <td className='ps-5'>{item.ItemName}</td>
                         <td>{item.Quantity}</td>
                         <td>{item.PricePerUnit}</td>
-                        <td>{calculatedAmount(item.Quantity, item.PricePerUnit)}</td>
+                        <td>{item.MakingCost}</td>
+                        <td>{calculatedAmount(item.Quantity, item.PricePerUnit, item.MakingCost)}</td>
                         <td>{item.Discount}%</td>
-                        <td>{calculatedTotal(item.Quantity, item.PricePerUnit, item.Discount)}</td>
+                        <td>{calculatedTotal(item.Quantity, item.PricePerUnit, item.Discount, item.MakingCost)}</td>
                     </tr>
 
                     ))}
