@@ -25,14 +25,18 @@ function App() {
   const [totalAmount, setTotalAmount] = useState(0)
   const [MakingCost, setMakingCost] = useState()
   const invoiceRef = useRef(null); // Ref to the invoice container
+  const [showbtn, setShowbtn] = useState(true)
 
   useEffect(() => {
     // Calculate the total amount whenever the list changes
     const total = list.reduce((acc, item) => {
-      const itemTotal = item.Quantity * item.PricePerUnit;
-      const discountAmount = itemTotal * (item.Discount / 100);
-      const makingcost = item.MakingCost * ((100-item.Discount) / 100);
-      return acc + (itemTotal - discountAmount)+makingcost;
+      const amnt = item.Quantity * item.PricePerUnit;
+      console.log(amnt)
+      const makingcostamnt = amnt + (amnt*item.MakingCost/100);
+      console.log(makingcostamnt)
+      const discountTotal = makingcostamnt - Discount;
+      console.log("total"+discountTotal)
+      return acc + discountTotal-item.Discount;
     }, 0);
     setTotalAmount(total);
   }, [list]);
@@ -50,6 +54,7 @@ function App() {
 
     const handlePrint = () => {
     window.print();
+    setShowbtn(false);
   };
 
   const handleSubmit = (e) => {
@@ -230,7 +235,7 @@ function App() {
             </div>
 
           <div className="flex flex-col">
-          <label htmlFor="MakingCost">Making cost</label>
+          <label htmlFor="MakingCost">Making cost(%)</label>
           <input
                 className="px-5"
                 type="number"
@@ -245,7 +250,7 @@ function App() {
 
 
             <div className="flex flex-col">
-          <label htmlFor="Discount">Discount(%)</label>
+          <label htmlFor="Discount">Discount</label>
           <input
                 className="px-5"
                 type="number"

@@ -2,7 +2,7 @@ import React from 'react';
 export default function ({ logo }) {
   return (
     <>
-      <section className="mt-5 flex flex-row mb-10 ">
+      <section className="flex flex-row mb-10 ">
         <div className="client-details">
           <img
             src={logo}
@@ -11,7 +11,7 @@ export default function ({ logo }) {
           />
         </div>
         <div>
-        <h2 className="text-xl font-bold">LAXMI JWELLERS</h2>
+        <h1 className="font-bold uppercase tracking-wide text-4xl mb-3">LAXMI JWELLERS</h1>
         <p className="">
           SHIVA JI NAGAR COLONY MURARI CHOWK SAMNEGHAT LANKA VARANASI{" "}
         </p>
