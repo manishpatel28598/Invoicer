@@ -6,8 +6,6 @@ import ClientDetails from "./components/ClientDetails";
 import Dates from "./components/Dates";
 import logo from "./components/logo1.png";
 import { v4 as uuidv4 } from "uuid";
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
 
 function App() {
   const [ShowInvoice, setShowInvoce] = useState(false);
@@ -126,6 +124,8 @@ function App() {
             >
               Edit Information
             </button>
+            <div className="border-solid border-2 border-blue-500 w mb-5 mt-2"></div>
+            <div className="text-center font-bold">THANKYOU, VISIT AGAIN</div>
           </div>
         ) : (
           <>
