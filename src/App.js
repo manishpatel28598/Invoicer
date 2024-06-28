@@ -24,6 +24,8 @@ function App() {
   const [MakingCost, setMakingCost] = useState()
   const invoiceRef = useRef(null); // Ref to the invoice container
   const [showbtn, setShowbtn] = useState(true)
+  const [recieved, setRecieved] = useState()
+  const [balance, setBalance] = useState(0)
 
   useEffect(() => {
     // Calculate the total amount whenever the list changes
@@ -39,14 +41,14 @@ function App() {
     setTotalAmount(total);
   }, [list]);
 
-   // Function to generate a random unique 10-digit invoice ID
-   const generateInvoiceID = () => {
-    return Math.floor(1000000000 + Math.random() * 9000000000).toString();
-  };
+  //  Function to generate a random unique 10-digit invoice ID
+  //  const generateInvoiceID = () => {
+  //   return Math.floor(1000000000 + Math.random() * 9000000000).toString();
+  // };
 
   useEffect(() => {
     // Generate a new invoice ID when the component mounts
-    setInvoiceNumber(generateInvoiceID());
+    setInvoiceNumber();
   }, []);
 
 
@@ -55,6 +57,17 @@ function App() {
     setShowbtn(false);
   };
 
+
+  // useEffect(() => {
+  //   // Generate a new invoice ID when the component mounts
+  //   setInvoiceNumber(generateInvoiceID());
+  // }, []);
+  
+  useEffect(()=>{
+    setBalance(totalAmount-recieved)
+    console.log(totalAmount+" and "+recieved +" and "+balance);
+  },[totalAmount, recieved])
+  
   const handleSubmit = (e) => {
     e.preventDefault()
 
@@ -80,11 +93,11 @@ function App() {
 
 
 
-  const handleGenerateInvoice = () => {
-    setShowInvoce(true);
-    // Generate a new invoice ID
-    setInvoiceNumber(generateInvoiceID());
-  };
+  // const handleGenerateInvoice = () => {
+  //   setShowInvoce(true);
+  //   // Generate a new invoice ID
+  //   setInvoiceNumber(generateInvoiceID());
+  // };
 
 
 
@@ -114,9 +127,16 @@ function App() {
               <p>₹{totalAmount.toFixed(2)}</p>
               </div>
               <div>
-              Authorised Signatory
+                <span><h5 className="text-sm font-bold">Recieved Amount:</h5><p>₹{recieved}</p></span>
+                <span><h5 className="text-sm font-bold">Balanced amount:</h5><p>₹{balance.toFixed(2)}</p></span>
               </div>
             </section>
+            <div>
+              Authorised Signatory
+              <div className="h-8">
+
+              </div>
+              </div>
 
             <div className="border-solid border-2 border-#f0f0f0-800 w mb-5 mt-2"></div>
             <div className="text-center font-bold">THANKYOU, VISIT AGAIN</div>
@@ -183,6 +203,20 @@ function App() {
                 autoComplete="off"
                 value={InvoiceDate}
                 onChange={(e)=> setInvoiceDate(e.target.value)}
+              />
+
+            </div>
+            <div className="flex flex-col">
+            <label htmlFor="InvoiceNumber">Invoice Number</label>
+              <input
+                className="px-5"
+                type="Number"
+                name="InvoiceNumber"
+                id="InvoiceNumber"
+                placeholder="Enter Invoice Number"
+                autoComplete="off"
+                value={invoiceNumber}
+                onChange={(e)=> setInvoiceNumber(e.target.value)}
               />
 
             </div>
@@ -260,6 +294,20 @@ function App() {
                 autoComplete="off"
                 value={Discount}
                 onChange={(e)=> setDiscount(e.target.value)}
+              />
+            </div>
+
+            <div className="flex flex-col">
+          <label htmlFor="PricePerUnit">Recieved Amount</label>
+          <input
+                className="px-5"
+                type="number"
+                name="Rate"
+                id="RecievedAmount"
+                placeholder="Enter recieved Amount"
+                autoComplete="off"
+                value={recieved}
+                onChange={(e)=> setRecieved(e.target.value)}
               />
             </div>
           </article>
