@@ -31,14 +31,15 @@ function App() {
     // Calculate the total amount whenever the list changes
     const total = list.reduce((acc, item) => {
       const amnt = item.Quantity * item.PricePerUnit;
-      console.log(amnt)
+      // console.log(amnt)
       const makingcostamnt = amnt + (amnt*item.MakingCost/100);
-      console.log(makingcostamnt)
+      // console.log(makingcostamnt)
       const discountTotal = makingcostamnt - Discount;
-      console.log("total"+discountTotal)
+      // console.log("total"+discountTotal)
       return acc + discountTotal-item.Discount;
     }, 0);
     setTotalAmount(total);
+    setBalance(total-recieved)
   }, [list]);
 
   //  Function to generate a random unique 10-digit invoice ID
@@ -63,10 +64,10 @@ function App() {
   //   setInvoiceNumber(generateInvoiceID());
   // }, []);
   
-  useEffect(()=>{
-    setBalance(totalAmount-recieved)
-    console.log(totalAmount+" and "+recieved +" and "+balance);
-  },[totalAmount, recieved])
+  // useEffect(()=>{
+    
+  //   console.log(totalAmount+" and "+recieved +" and "+balance);
+  // },[totalAmount, recieved])
   
   const handleSubmit = (e) => {
     e.preventDefault()
